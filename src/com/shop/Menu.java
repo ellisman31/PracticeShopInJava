@@ -10,17 +10,16 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private Scanner scanner;
     private Shop shop;
     private Registration registration;
     private Login login;
     private Customer currentCustomer;
     private int menuOption;
+    private final Scanner scanner = Util.SCANNER;
 
     public Menu(Shop shop) {
         this.shop = shop;
-        this.scanner = Util.SCANNER;
-        this.registration = new Registration(this.shop, this.scanner);
+        this.registration = new Registration(this.shop);
         this.login = new Login(this.shop);
         this.menuOption = 0;
     }
@@ -75,7 +74,7 @@ public class Menu {
                     this.getShop().getInventory().getListOfProducts();
                     break;
                 case 2:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     if (productName != null) {
                         this.getCurrentCustomer().getCart().addProductToCart(productName, getShop().getInventory());
                     } else {
@@ -83,7 +82,7 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     if (productName != null) {
                         this.getCurrentCustomer().getCart().removeProductFromCart(productName, getShop().getInventory());
                     } else {
@@ -116,7 +115,7 @@ public class Menu {
                     getShop().getInventory().getListOfProducts();
                     break;
                 case 2:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     if (productName != null) {
                         getCurrentCustomer().getCart().addProductToCart(productName, getShop().getInventory());
                     } else {
@@ -124,7 +123,7 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     if (productName != null) {
                         getCurrentCustomer().getCart().removeProductFromCart(productName, getShop().getInventory());
                     } else {
@@ -138,17 +137,17 @@ public class Menu {
                     System.out.println(getCurrentCustomer().toString());
                     break;
                 case 6:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     getShop().getInventory().updateProduct(getCurrentCustomer(), productName);
                     break;
                 case 7:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     int amountOfTheProductAvailableAmount = getShop().getInventory().getAmountOfProduct(productName);
-                    int removeProductAmount = askForRemoveProductAmount(productName, amountOfTheProductAvailableAmount);
+                    int removeProductAmount = Util.askForRemoveProductAmount(productName, amountOfTheProductAvailableAmount);
                     getShop().getInventory().removeProduct(productName, removeProductAmount, amountOfTheProductAvailableAmount);
                     break;
                 case 8:
-                    productName = askForProductName();
+                    productName = Util.askForProductName();
                     getShop().getInventory().deleteProductFromInventory(getCurrentCustomer(), productName);
                     break;
                 case 9:
@@ -160,24 +159,6 @@ public class Menu {
             }
         }
     }
-
-    private int askForRemoveProductAmount(String productName, int amountOfTheProductAvailableAmount) {
-        System.out.println("If you would like to remove all the products, please" +
-                "use the Delete Product Menu Option!\n" +
-                "Please provide how many products would you like to remove of " + productName + ".\n" +
-                "Available amount of the product: " + amountOfTheProductAvailableAmount + ".\n");
-        int providedAmountOfProductToRemove = getScanner().nextInt();
-        if (providedAmountOfProductToRemove < amountOfTheProductAvailableAmount) {
-            return providedAmountOfProductToRemove;
-        }
-        return 0;
-    }
-
-    private String askForProductName() {
-        System.out.println("Please provide a product name: ");
-        return getScanner().next();
-    }
-
     private void adminMenuDesignPattern() {
         System.out.println("""
                 Welcome to the Online-Store!
@@ -213,14 +194,6 @@ public class Menu {
                 5) View Profile
                 6) Exit
                 Please select from the menu options:""");
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     public Shop getShop() {
@@ -261,5 +234,9 @@ public class Menu {
 
     public void setMenuOption(int menuOption) {
         this.menuOption = menuOption;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
     }
 }

@@ -12,11 +12,10 @@ import java.util.Scanner;
 public class Registration {
 
     private Shop shop;
-    private Scanner scanner;
+    private final Scanner scanner = Util.SCANNER;
 
-    public Registration(Shop shop, Scanner scanner) {
+    public Registration(Shop shop) {
         this.shop = shop;
-        this.scanner = scanner;
         dummyRegisteredUser();
     }
 
@@ -105,9 +104,5 @@ public class Registration {
 
     public Scanner getScanner() {
         return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
     }
 }

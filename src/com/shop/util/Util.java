@@ -23,4 +23,22 @@ public class Util {
                 .anyMatch(customer -> customer.getUser().getEmailAddress().equals(emailAddress));
     }
 
+    public static String askForProductName() {
+        System.out.println("Please provide a product name: ");
+        return SCANNER.next();
+    }
+
+    public static int askForRemoveProductAmount(String productName, int amountOfTheProductAvailableAmount) {
+        System.out.println("If you would like to remove all the products, please" +
+                "use the Delete Product Menu Option!\n" +
+                "Please provide how many products would you like to remove of " + productName + ".\n" +
+                "Available amount of the product: " + amountOfTheProductAvailableAmount + ".\n");
+        int providedAmountOfProductToRemove = SCANNER.nextInt();
+        if (providedAmountOfProductToRemove < amountOfTheProductAvailableAmount) {
+            return providedAmountOfProductToRemove;
+        }
+        return 0;
+    }
+
+
 }
